@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:25:17 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 16:51:39 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 13:24:13 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int		errormess(char *mess)
 int		message(t_phil *phil, int type)
 {
 	sem_wait(phil->info.write);
+	sem_wait(phil->info.dead);
+	sem_post(phil->info.dead);
 	ft_printf("%d philosopher %d ", get_time(), phil->name);
 	if (type == FORK)
 		ft_printf("has taken a fork\n");

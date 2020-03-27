@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 17:27:57 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 13:16:41 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,18 @@ void		*check_if_dead(void *philpointer)
 	t_phil		*phil;
 
 	phil = (t_phil *)philpointer;
-	while (phil->times_eaten != phil->info.max_eat)
+	while (1)
 	{
 		if (!phil->eating && phil->times_eaten != phil->info.max_eat &&
 			get_time() - phil->last_eat > (uint64_t)phil->info.time_to_die)
 		{
 			message(phil, DEAD);
-			sem_post(phil->info.dead);
+			sem_wait(phil->info.dead);
+			exit (1);
 		}
 		usleep(100);
 	}
 	return (NULL);
-}
-
-void		*surveil(void *philpointer)
-{
-	t_phil		*phil;
-
-	phil = (t_phil *)philpointer;
-	sem_wait(phil->info.dead);
-	exit(0);
 }
 
 void		*start_phil(t_phil *phil)
@@ -46,21 +38,19 @@ void		*start_phil(t_phil *phil)
 
 	can_eat_enough = (phil->info.max_eat > 0) ? 1 : 0;
 	pthread_create(&surveiller[0], NULL, check_if_dead, (void *)phil);
-	pthread_create(&surveiller[1], NULL, surveil, (void *)phil);
-	get_time();
+	phil->last_eat = get_time();
 	while (1)
 	{
 		eat(phil);
 		if (can_eat_enough && phil->times_eaten == phil->info.max_eat)
 		{
 			message(phil, ENOUGH);
-			exit(1);
+			exit(0);
 		}
 		message(phil, SLEEP);
 		usleep(1000 * (phil->info.time_to_sleep));
 		message(phil, THINK);
 	}
-	exit(1);
 }
 
 pid_t	*start_program(t_info info)
@@ -91,10 +81,7 @@ pid_t	*start_program(t_info info)
 			exit(1);
 		}
 		if (!pids[i])
-		{
-			// usleep(10000 * (info.num_phil - i));
 			start_phil(phils[i]);
-		}
 	}
 	return (pids);
 }

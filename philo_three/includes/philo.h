@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 16:48:47 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 12:30:23 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct		s_info
 	sem_t			*forks;
 	sem_t			*write;
 	sem_t			*dead;
+	int				someone_is_dead;
 	int				num_phil;
 	int				time_to_die;
 	int				time_to_eat;

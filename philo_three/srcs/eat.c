@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 15:35:48 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 16:51:37 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 13:21:47 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void eat(t_phil *phil)
 	sem_wait(phil->info.forks);
 	message(phil, FORK);
 	sem_wait(phil->info.forks);
+	// sem_wait(phil->info.dead);
+	// sem_post(phil->info.dead);
 	phil->eating = 1;
 	message(phil, FORK);
 	message(phil, EAT);

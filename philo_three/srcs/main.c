@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 16:48:37 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 13:45:29 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int		get_info(t_info *info, int ac, char **av)
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	sem_unlink("/sdead");
-	if (!(info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil)))
-		printf("error with sem open\n");
+	info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil);
 	info->write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
-	info->dead = sem_open("/sdead", O_CREAT, S_IRWXU, 0);
+	info->dead = sem_open("/sdead", O_CREAT, S_IRWXU, 1);
+	info->someone_is_dead = 0;
 	return (0);
 }
 
@@ -49,6 +49,7 @@ int		main(int ac, char **av)
 	t_info		info;
 	pid_t		*pids;
 	int			signal;
+	int			i;
 
 	if (ac < 5 || ac > 6)
 		return (errormess("error: wrong number of arguments"));
@@ -56,8 +57,15 @@ int		main(int ac, char **av)
 		return (errormess("error: arguments"));
 	if (!(pids = start_program(info)))
 		return (errormess("error: fatal"));
+	signal = 0;
+	i = 0;
+	while (!signal && i++ < info.num_phil)
+	{
+		wait(&signal);
+		signal = WEXITSTATUS(signal);
+	}
 	while (info.num_phil-- > 0)
-		waitpid(pids[info.num_phil], &signal, WUNTRACED);
+		kill(pids[info.num_phil], SIGKILL);
 	destroy_sem(info);
 	free_all_malloc();
 	return (0);
