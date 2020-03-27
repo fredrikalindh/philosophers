@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/24 16:58:14 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/25 16:48:47 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <fcntl.h>
 # include <pthread.h>
 # include <ft_printf.h>
+# include <semaphore.h>
+# include <signal.h>
+
+
 
 typedef enum {
 	FORK,
@@ -27,15 +32,17 @@ typedef enum {
 	THINK,
 	DEAD,
 	ENOUGH
-}messages;
+} messages;
+
+# define FORKS "forks"
+# define WRITE "swrite"
 
 typedef struct		s_info
 {
-	int				someone_is_dead;
-	pthread_mutex_t	write;
-	pthread_mutex_t	*forks;
+	sem_t			*forks;
+	sem_t			*write;
+	sem_t			*dead;
 	int				num_phil;
-	int				phils_whos_eaten_enough;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
@@ -47,8 +54,8 @@ typedef struct		s_phil
 	int				name;
 	uint64_t		last_eat;
 	int				times_eaten;
-	pthread_mutex_t	eating;
-	t_info			*info;
+	int				eating;
+	t_info			info;
 }					t_phil;
 
 typedef struct		s_list
@@ -61,7 +68,7 @@ int					free_all_malloc(void);
 int					ft_atoi(char *str);
 void				*mmalloc(unsigned int size);
 void				eat(t_phil *phil);
-pthread_t			*start_program(t_info *info);
+pid_t				*start_program(t_info info);
 uint64_t			get_time(void);
 int					errormess(char *mess);
 int					message(t_phil *phil, int type);

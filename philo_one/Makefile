@@ -6,7 +6,7 @@
 #    By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/08 16:41:33 by fredrika          #+#    #+#              #
-#    Updated: 2020/03/08 21:22:40 by fredrikalindh    ###   ########.fr        #
+#    Updated: 2020/03/24 17:17:27 by fredrikalindh    ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ NAME					=	philo_one
 CC						=	gcc
 
 FLAGS					=	-Wall -Wextra -Werror \
-							-lpthread \
+							-g3 -fsanitize=address \
+							# -lpthread \
+
 
 # *** PROJECT HEADER ********************************************************* #
 
@@ -42,7 +44,11 @@ SRCS_PRINTF				=	\
 							ft_printf/to_nbr.c \
 							ft_printf/to_s.c \
 
-SRCS_LIST				=	philo_one.c \
+SRCS_LIST				=	main.c \
+							messages.c \
+							eat.c \
+							start.c \
+							utils.c \
 							mmalloc.c \
 							ft_atoi.c \
 							$(SRCS_PRINTF)
@@ -64,7 +70,7 @@ OBJS					=	$(addprefix $(OBJS_DIR), $(OBJS_LIST))
 all: $(OBJS) $(SRCS) $(NAME)
 
 $(NAME): $(OBJS) $(SRCS)
-	@ $(CC) $(FLAGS) $(HDIR) $(OBJS) -o $@
+	@ $(CC) $(FLAGS) $(HDIR) $(OBJS) -o $@ -lpthread
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	@ mkdir -p $(dir $@)

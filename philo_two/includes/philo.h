@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/24 16:58:14 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/25 14:46:00 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <fcntl.h>
 # include <pthread.h>
 # include <ft_printf.h>
+# include <semaphore.h>
 
 typedef enum {
 	FORK,
@@ -29,11 +31,14 @@ typedef enum {
 	ENOUGH
 }messages;
 
+# define FORKS "forks"
+# define WRITE "swrite"
+
 typedef struct		s_info
 {
+	sem_t			*forks;
+	sem_t			*write;
 	int				someone_is_dead;
-	pthread_mutex_t	write;
-	pthread_mutex_t	*forks;
 	int				num_phil;
 	int				phils_whos_eaten_enough;
 	int				time_to_die;
@@ -47,7 +52,7 @@ typedef struct		s_phil
 	int				name;
 	uint64_t		last_eat;
 	int				times_eaten;
-	pthread_mutex_t	eating;
+	int				eating;
 	t_info			*info;
 }					t_phil;
 

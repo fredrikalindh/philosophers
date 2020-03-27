@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strnlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frlindh <frlindh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/25 18:21:39 by frlindh           #+#    #+#             */
-/*   Updated: 2020/03/24 16:48:18 by fredrikalindh    ###   ########.fr       */
+/*   Created: 2019/11/03 12:08:42 by frlindh           #+#    #+#             */
+/*   Updated: 2020/02/21 13:44:31 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <ft_printf.h>
 
-int	ft_atoi(const char *str)
+int		ft_strnlen(char *str, int n)
 {
-	int i;
-	int c;
-	int neg;
+	int	i;
 
 	i = 0;
-	c = 0;
-	neg = 1;
-	while (str[i] == ' ' || str[i] == '\f' || str[i] == '\t' ||
-		str[i] == '\v' || str[i] == '\r' || str[i] == '\n')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			neg = -neg;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		c = c * 10 + str[i] - '0';
-		i++;
-	}
-	return (!i) ? (-1) : (c * neg);
+	if (n != -1)
+		while (str && str[i] && i < n)
+			i++;
+	else
+		while (str && str[i])
+			i++;
+	return (i);
 }

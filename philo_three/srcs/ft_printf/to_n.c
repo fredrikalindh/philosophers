@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   to_n.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frlindh <frlindh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/25 18:21:39 by frlindh           #+#    #+#             */
-/*   Updated: 2020/03/24 16:48:18 by fredrikalindh    ###   ########.fr       */
+/*   Created: 2019/11/08 11:43:30 by frlindh           #+#    #+#             */
+/*   Updated: 2020/03/04 12:26:49 by frlindh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <ft_printf.h>
 
-int	ft_atoi(const char *str)
+void	to_n(int printed, int *dir, va_list ap)
 {
-	int i;
-	int c;
-	int neg;
+	int	*ptr;
 
-	i = 0;
-	c = 0;
-	neg = 1;
-	while (str[i] == ' ' || str[i] == '\f' || str[i] == '\t' ||
-		str[i] == '\v' || str[i] == '\r' || str[i] == '\n')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	if (dir[PF_LONG] >= 0)
 	{
-		if (str[i] == '-')
-			neg = -neg;
-		i++;
+		if (dir[PF_LONG] == 0)
+			ptr = (int *)va_arg(ap, long *);
+		else
+			ptr = (int *)va_arg(ap, long long *);
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	else if (dir[PF_SHORT] >= 0)
 	{
-		c = c * 10 + str[i] - '0';
-		i++;
+		if (dir[PF_SHORT] == 0)
+			ptr = (int *)va_arg(ap, short int *);
+		else
+			ptr = (int *)va_arg(ap, signed char *);
 	}
-	return (!i) ? (-1) : (c * neg);
+	else
+		ptr = va_arg(ap, int *);
+	*ptr = printed;
 }
