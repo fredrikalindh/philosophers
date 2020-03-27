@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/24 16:46:55 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 14:17:16 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,20 @@ void		*surveil(void *philpointer)
 	while (!phil->info->someone_is_dead &&
 		phil->times_eaten != phil->info->max_eat)
 	{
-		pthread_mutex_lock(&phil->eating);
-		if (!phil->info->someone_is_dead &&
+		if (!phil->is_eating && !phil->info->someone_is_dead &&
 			phil->times_eaten != phil->info->max_eat &&
 			get_time() - phil->last_eat > (uint64_t)phil->info->time_to_die)
 		{
 			message(phil, DEAD);
-			pthread_mutex_lock(&phil->info->write);
 			phil->info->someone_is_dead = 1;
-			pthread_mutex_unlock(&phil->info->write);
+			pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
+			pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
+			return (NULL);
 		}
-		pthread_mutex_unlock(&phil->eating);
 		usleep(100);
 	}
+	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
+	pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]); //might giv segv
 	return (NULL);
 }
 
@@ -48,20 +49,19 @@ void		*start_phil(void *philpointer)
 	while (!phil->info->someone_is_dead)
 	{
 		eat(phil);
-		if (can_eat_enough && phil->times_eaten == phil->info->max_eat)
+		if (!phil->info->someone_is_dead &&
+			can_eat_enough && phil->times_eaten == phil->info->max_eat)
 		{
 			message(phil, ENOUGH);
 			pthread_mutex_lock(&phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			pthread_mutex_unlock(&phil->info->write);
-			pthread_mutex_destroy(&phil->eating);
 			return (NULL);
 		}
 		message(phil, SLEEP);
 		usleep(1000 * (phil->info->time_to_sleep));
 		message(phil, THINK);
 	}
-	pthread_mutex_destroy(&phil->eating);
 	return (NULL);
 }
 
@@ -78,9 +78,9 @@ pthread_t	*start_program(t_info *info)
 	{
 		phils[i] = (t_phil *)mmalloc(sizeof(t_phil));
 		phils[i]->info = info;
-		pthread_mutex_init(&phils[i]->eating, NULL);
 		phils[i]->name = i + 1;
 		phils[i]->last_eat = 0;
+		phils[i]->is_eating = 0;
 		phils[i]->times_eaten = 0;
 	}
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 14:53:49 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 14:18:32 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void		*surveil(void *philpointer)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
+			return (NULL);
 		}
 		usleep(100);
 	}
@@ -36,15 +37,13 @@ void		*start_phil(void *philpointer)
 {
 	pthread_t	surveiller;
 	t_phil		*phil;
-	int			can_eat_enough;
 
 	phil = (t_phil *)philpointer;
-	can_eat_enough = (phil->info->max_eat > 0) ? 1 : 0;
 	pthread_create(&surveiller, NULL, surveil, philpointer);
 	while (!phil->info->someone_is_dead)
 	{
 		eat(phil);
-		if (can_eat_enough && phil->times_eaten == phil->info->max_eat)
+		if (phil->times_eaten == phil->info->max_eat)
 		{
 			message(phil, ENOUGH);
 			sem_wait(phil->info->write);
@@ -82,7 +81,7 @@ pthread_t	*start_program(t_info *info)
 	while (++i < info->num_phil)
 	{
 		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
-		// usleep(100);
+		usleep(100);
 	}
 	return (threads);
 }

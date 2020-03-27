@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/24 16:58:14 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 13:52:43 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct		s_phil
 	int				name;
 	uint64_t		last_eat;
 	int				times_eaten;
-	pthread_mutex_t	eating;
+	int				is_eating;
 	t_info			*info;
 }					t_phil;
 
