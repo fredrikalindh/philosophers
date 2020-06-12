@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 12:30:23 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/04/15 23:11:13 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,22 @@
 # include <semaphore.h>
 # include <signal.h>
 
-
-
-typedef enum {
+typedef enum	e_messages {
 	FORK,
 	EAT,
 	SLEEP,
 	THINK,
 	DEAD,
 	ENOUGH
-} messages;
+}				t_messages;
 
-# define FORKS "forks"
-# define WRITE "swrite"
+sem_t			*g_forks;
+sem_t			*g_start;
+sem_t			*g_write;
+sem_t			*g_dead;
 
 typedef struct		s_info
 {
-	sem_t			*forks;
-	sem_t			*write;
-	sem_t			*dead;
-	int				someone_is_dead;
 	int				num_phil;
 	int				time_to_die;
 	int				time_to_eat;

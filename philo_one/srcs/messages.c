@@ -12,29 +12,35 @@
 
 #include <philo.h>
 
-int		errormess(char *mess)
+int	errormess(char *mess)
 {
 	ft_printf("%s\n", mess);
 	return (1);
 }
 
-int		message(t_phil *phil, int type)
+int	message(t_phil *phil, int type)
 {
 	pthread_mutex_lock(&phil->info->write);
 	if (!phil->info->someone_is_dead)
 	{
 		if (type == FORK)
-			ft_printf("%d philosopher %d has taken a fork\n", get_time(), phil->name);
+			ft_printf("%d philosopher %d has taken a fork\n",
+			get_time(), phil->name);
 		else if (type == EAT)
-			ft_printf("%d philosopher %d is eating\n", get_time(), phil->name);
+			ft_printf("%d philosopher %d is eating\n",
+			get_time(), phil->name);
 		else if (type == SLEEP)
-			ft_printf("%d philosopher %d is sleeping\n", get_time(), phil->name);
+			ft_printf("%d philosopher %d is sleeping\n",
+			get_time(), phil->name);
 		else if (type == THINK)
-			ft_printf("%d philosopher %d is thinking\n", get_time(), phil->name);
+			ft_printf("%d philosopher %d is thinking\n",
+			get_time(), phil->name);
 		else if (type == ENOUGH)
-			ft_printf("%d philosopher %d has eaten enough\n", get_time(), phil->name);
+			ft_printf("%d philosopher %d has eaten enough\n",
+			get_time(), phil->name);
 		else if (type == DEAD)
-			ft_printf("%d philosopher %d died\n", get_time(), phil->name);
+			ft_printf("%d philosopher %d died\n",
+			get_time(), phil->name);
 	}
 	pthread_mutex_unlock(&phil->info->write);
 	return (0);

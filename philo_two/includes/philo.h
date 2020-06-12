@@ -22,17 +22,14 @@
 # include <ft_printf.h>
 # include <semaphore.h>
 
-typedef enum {
+typedef enum	e_messages {
 	FORK,
 	EAT,
 	SLEEP,
 	THINK,
 	DEAD,
 	ENOUGH
-}messages;
-
-# define FORKS "forks"
-# define WRITE "swrite"
+}				t_messages;
 
 typedef struct		s_info
 {

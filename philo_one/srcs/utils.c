@@ -12,14 +12,14 @@
 
 #include <philo.h>
 
-uint64_t get_time(void)
+uint64_t	get_time(void)
 {
-	static struct timeval	start = {0,0};
-	struct timeval	tv;
+	static struct timeval	start = {0, 0};
+	struct timeval			tv;
 
 	if (!start.tv_sec)
 		gettimeofday(&start, NULL);
 	gettimeofday(&tv, NULL);
 	return (((tv.tv_sec - start.tv_sec) * (uint64_t)1000) +
-	((tv.tv_usec - start.tv_usec) / 1000));
+			((tv.tv_usec - start.tv_usec) / 1000));
 }

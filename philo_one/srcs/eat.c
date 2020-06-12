@@ -12,7 +12,7 @@
 
 #include <philo.h>
 
-void eat(t_phil *phil)
+void	eat(t_phil *phil)
 {
 	pthread_mutex_lock(&phil->info->forks[phil->name - 1]);
 	message(phil, FORK);
@@ -20,16 +20,17 @@ void eat(t_phil *phil)
 	if (phil->info->someone_is_dead)
 	{
 		pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
-		pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
+		pthread_mutex_unlock(
+			&phil->info->forks[phil->name % phil->info->num_phil]);
 		return ;
 	}
 	phil->is_eating = 1;
 	message(phil, FORK);
 	message(phil, EAT);
+	phil->last_eat = get_time();
 	usleep(1000 * phil->info->time_to_eat);
 	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
 	pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
 	phil->times_eaten++;
-	phil->last_eat = get_time();
 	phil->is_eating = 0;
 }

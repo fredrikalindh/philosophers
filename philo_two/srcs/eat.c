@@ -12,7 +12,7 @@
 
 #include <philo.h>
 
-void eat(t_phil *phil)
+void	eat(t_phil *phil)
 {
 	sem_wait(phil->info->forks);
 	message(phil, FORK);
@@ -26,10 +26,10 @@ void eat(t_phil *phil)
 	phil->eating = 1;
 	message(phil, FORK);
 	message(phil, EAT);
+	phil->last_eat = get_time();
 	usleep(1000 * phil->info->time_to_eat);
 	sem_post(phil->info->forks);
 	sem_post(phil->info->forks);
 	phil->times_eaten++;
-	phil->last_eat = get_time();
 	phil->eating = 0;
 }

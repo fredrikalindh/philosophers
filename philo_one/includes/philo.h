@@ -20,14 +20,14 @@
 # include <pthread.h>
 # include <ft_printf.h>
 
-typedef enum {
+typedef enum	e_messages {
 	FORK,
 	EAT,
 	SLEEP,
 	THINK,
 	DEAD,
 	ENOUGH
-}messages;
+}				t_messages;
 
 typedef struct		s_info
 {

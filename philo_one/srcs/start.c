@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 14:17:16 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 14:19:45 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ void		*surveil(void *philpointer)
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
 			pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
-			pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
+			pthread_mutex_unlock(
+				&phil->info->forks[phil->name % phil->info->num_phil]);
 			return (NULL);
 		}
 		usleep(100);
 	}
 	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
-	pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]); //might giv segv
+	pthread_mutex_unlock(
+		&phil->info->forks[phil->name % phil->info->num_phil]);
 	return (NULL);
 }
 
@@ -41,16 +43,14 @@ void		*start_phil(void *philpointer)
 {
 	pthread_t	surveiller;
 	t_phil		*phil;
-	int			can_eat_enough;
 
 	phil = (t_phil *)philpointer;
-	can_eat_enough = (phil->info->max_eat > 0) ? 1 : 0;
 	pthread_create(&surveiller, NULL, surveil, philpointer);
 	while (!phil->info->someone_is_dead)
 	{
 		eat(phil);
 		if (!phil->info->someone_is_dead &&
-			can_eat_enough && phil->times_eaten == phil->info->max_eat)
+			phil->times_eaten == phil->info->max_eat)
 		{
 			message(phil, ENOUGH);
 			pthread_mutex_lock(&phil->info->write);

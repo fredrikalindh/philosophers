@@ -17,7 +17,7 @@ int		get_info(t_info *info, int ac, char **av)
 {
 	if ((info->num_phil = ft_atoi(av[1])) < 2 ||
 	(info->time_to_die = ft_atoi(av[2])) < 0 ||
-	(info->time_to_eat = ft_atoi(av[3]))  < 0||
+	(info->time_to_eat = ft_atoi(av[3])) < 0 ||
 	(info->time_to_sleep = ft_atoi(av[4])) < 0)
 		return (1);
 	if (ac == 6 && (info->max_eat = ft_atoi(av[5])) <= 0)

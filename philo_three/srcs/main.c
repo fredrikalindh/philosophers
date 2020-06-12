@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 13:45:29 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/04/15 23:11:21 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,31 @@ int		get_info(t_info *info, int ac, char **av)
 {
 	if ((info->num_phil = ft_atoi(av[1])) < 2 ||
 	(info->time_to_die = ft_atoi(av[2])) < 0 ||
-	(info->time_to_eat = ft_atoi(av[3]))  < 0||
+	(info->time_to_eat = ft_atoi(av[3])) < 0 ||
 	(info->time_to_sleep = ft_atoi(av[4])) < 0)
 		return (1);
 	if (ac == 6 && (info->max_eat = ft_atoi(av[5])) <= 0)
 		return (1);
 	else if (ac == 5)
 		info->max_eat = -1;
+	sem_unlink("/sstart");
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	sem_unlink("/sdead");
-	info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil);
-	info->write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
-	info->dead = sem_open("/sdead", O_CREAT, S_IRWXU, 1);
-	info->someone_is_dead = 0;
+	g_start = sem_open("/sstart", O_CREAT, S_IRWXU, 0);
+	g_forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil);
+	g_write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
+	g_dead = sem_open("/sdead", O_CREAT, S_IRWXU, 1);
 	return (0);
 }
 
-void	destroy_sem(t_info info)
+void	destroy_sem(void)
 {
-	sem_close(info.forks);
-	sem_close(info.write);
-	sem_close(info.dead);
+	sem_close(g_start);
+	sem_close(g_forks);
+	sem_close(g_write);
+	sem_close(g_dead);
+	sem_unlink("/sstart");
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	sem_unlink("/sdead");
@@ -66,7 +69,7 @@ int		main(int ac, char **av)
 	}
 	while (info.num_phil-- > 0)
 		kill(pids[info.num_phil], SIGKILL);
-	destroy_sem(info);
+	destroy_sem();
 	free_all_malloc();
 	return (0);
 }
