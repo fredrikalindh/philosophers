@@ -12,10 +12,10 @@
 
 #include <philo.h>
 
-uint64_t	get_time(void)
+unsigned long long get_time(void)
 {
-	static struct timeval	start = {0, 0};
-	struct timeval			tv;
+	static struct timeval start = {0, 0};
+	struct timeval tv;
 
 	if (!start.tv_sec)
 		gettimeofday(&start, NULL);
