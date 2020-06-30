@@ -6,13 +6,13 @@
 #    By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/08 16:41:33 by fredrika          #+#    #+#              #
-#    Updated: 2020/03/25 12:56:59 by fredrikalindh    ###   ########.fr        #
+#    Updated: 2020/03/24 17:17:27 by fredrikalindh    ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # *** NAME - CC - FLAGS ****************************************************** #
 
-NAME					=	philo_two
+NAME					=	philo_one
 
 CC						=	gcc
 

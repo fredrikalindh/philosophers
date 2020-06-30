@@ -85,6 +85,7 @@ pthread_t	*start_program(t_info *info)
 		phils[i]->last_eat = 0;
 		phils[i]->is_eating = 0;
 		phils[i]->times_eaten = 0;
+		phils[i]->forks = info->forks;
 	}
 	i = -1;
 	info->start = 0;
@@ -93,7 +94,7 @@ pthread_t	*start_program(t_info *info)
 		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
 		// usleep(100);
 	}
-	get_time();
 	info->start = 1;
+	get_time();
 	return (threads);
 }

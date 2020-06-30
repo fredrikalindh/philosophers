@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 15:35:48 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 13:56:50 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 14:07:59 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 void	eat(t_phil *phil)
 {
-	sem_wait(g_forks);
+	pthread_mutex_lock(&phil->info->forks[phil->name - 1]);
 	message(phil, FORK);
-	sem_wait(g_forks);
-	sem_wait(g_dead);
-	sem_post(g_dead);
-	phil->eating = 1;
+	pthread_mutex_lock(&phil->info->forks[phil->name % phil->info->num_phil]);
+	if (phil->info->someone_is_dead)
+	{
+		pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
+		pthread_mutex_unlock(
+			&phil->info->forks[phil->name % phil->info->num_phil]);
+		return ;
+	}
+	phil->is_eating = 1;
 	message(phil, FORK);
 	message(phil, EAT);
 	phil->last_eat = get_time();
-	usleep(1000 * phil->info.time_to_eat);
-	sem_post(g_forks);
-	sem_post(g_forks);
-	phil->times_eaten++;
-	phil->eating = 0;
+	usleep(1000 * phil->info->time_to_eat);
+	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
+	pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
+	++phil->times_eaten;
+	phil->is_eating = 0;
 }

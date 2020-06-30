@@ -6,21 +6,21 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:25:17 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 13:56:12 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/27 13:55:58 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-int		errormess(char *mess)
+int	errormess(char *mess)
 {
 	ft_printf("%s\n", mess);
 	return (1);
 }
 
-int		message(t_phil *phil, int type)
+int	message(t_phil *phil, int type)
 {
-	sem_wait(phil->info->write);
+	pthread_mutex_lock(&phil->info->write);
 	if (!phil->info->someone_is_dead)
 	{
 		if (type == FORK)
@@ -42,6 +42,6 @@ int		message(t_phil *phil, int type)
 			ft_printf("%d philosopher %d died\n",
 			get_time(), phil->name);
 	}
-	sem_post(phil->info->write);
+	pthread_mutex_unlock(&phil->info->write);
 	return (0);
 }

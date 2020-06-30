@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/25 15:07:15 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/03/24 17:16:53 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,30 @@
 int		get_info(t_info *info, int ac, char **av)
 {
 	if ((info->num_phil = ft_atoi(av[1])) < 2 ||
-	(info->time_to_die = ft_atoi(av[2])) < 0 ||
-	(info->time_to_eat = ft_atoi(av[3])) < 0 ||
-	(info->time_to_sleep = ft_atoi(av[4])) < 0)
+		(info->time_to_die = ft_atoi(av[2])) < 0 ||
+		(info->time_to_eat = ft_atoi(av[3])) < 0 ||
+		(info->time_to_sleep = ft_atoi(av[4])) < 0)
 		return (1);
 	if (ac == 6 && (info->max_eat = ft_atoi(av[5])) <= 0)
 		return (1);
 	else if (ac == 5)
 		info->max_eat = -1;
+	info->forks =
+		(pthread_mutex_t *)mmalloc(sizeof(pthread_mutex_t) * info->num_phil);
+	ac = -1;
+	while (++ac < info->num_phil)
+		pthread_mutex_init(&info->forks[ac], NULL);
 	info->someone_is_dead = 0;
 	info->phils_whos_eaten_enough = 0;
-	sem_unlink("/sforks");
-	sem_unlink("/swrite");
-	if (!(info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil)))
-		printf("error with sem open\n");
-	info->write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
+	pthread_mutex_init(&info->write, NULL);
 	return (0);
 }
 
-void	destroy_sem(t_info info)
+void	destroy_mutexes(t_info info, int num)
 {
-	sem_close(info.forks);
-	sem_close(info.write);
-	sem_unlink("/sforks");
-	sem_unlink("/swrite");
+	while (num-- > 0)
+		pthread_mutex_destroy(&info.forks[num]);
+	pthread_mutex_destroy(&info.write);
 }
 
 int		main(int ac, char **av)
@@ -57,11 +57,8 @@ int		main(int ac, char **av)
 		info.phils_whos_eaten_enough < info.num_phil)
 		usleep(100);
 	while (info.num_phil-- > 0)
-	{
-		sem_post(info.forks);
 		pthread_join(threads[info.num_phil], NULL);
-	}
-	destroy_sem(info);
+	destroy_mutexes(info, info.num_phil);
 	free_all_malloc();
 	return (0);
 }

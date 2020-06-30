@@ -14,9 +14,11 @@
 
 void	eat(t_phil *phil)
 {
-	pthread_mutex_lock(&phil->info->forks[phil->name - 1]);
+	pthread_mutex_t		*t1 = &phil->info->forks[phil->name - 1];
+	pthread_mutex_t		*t2 = &phil->info->forks[phil->name % phil->info->num_phil];
+	pthread_mutex_lock(t1);
 	message(phil, FORK);
-	pthread_mutex_lock(&phil->info->forks[phil->name % phil->info->num_phil]);
+	pthread_mutex_lock(t2);
 	if (phil->info->someone_is_dead)
 	{
 		pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
@@ -29,8 +31,8 @@ void	eat(t_phil *phil)
 	message(phil, EAT);
 	phil->last_eat = get_time();
 	usleep(1000 * phil->info->time_to_eat);
-	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
-	pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
+	pthread_mutex_unlock(t1);
+	pthread_mutex_unlock(t2);
 	++phil->times_eaten;
 	phil->is_eating = 0;
 }

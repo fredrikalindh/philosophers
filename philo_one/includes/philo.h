@@ -32,7 +32,7 @@ typedef enum			e_messages
 
 typedef struct			s_info
 {
-	int					someone_is_dead;
+	int					someone_is_dead:1;
 	pthread_mutex_t		write;
 	pthread_mutex_t		*forks;
 	int					num_phil;
@@ -50,6 +50,7 @@ typedef struct			s_phil
 	unsigned long long	last_eat;
 	int					times_eaten;
 	int					is_eating;
+	pthread_mutex_t		*forks;
 	t_info				*info;
 }						t_phil;
 
