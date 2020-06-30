@@ -47,7 +47,7 @@ typedef struct		s_info
 typedef struct		s_phil
 {
 	int				name;
-	uint64_t		last_eat;
+	u_int64_t		last_eat;
 	int				times_eaten;
 	int				eating;
 	t_info			*info;
@@ -64,7 +64,7 @@ int					ft_atoi(char *str);
 void				*mmalloc(unsigned int size);
 void				eat(t_phil *phil);
 pthread_t			*start_program(t_info *info);
-uint64_t			get_time(void);
+u_int64_t			get_time(void);
 int					errormess(char *mess);
 int					message(t_phil *phil, int type);
 
