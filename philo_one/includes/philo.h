@@ -67,6 +67,7 @@ void					*mmalloc(unsigned int size);
 void					eat(t_phil *phil);
 pthread_t				*start_program(t_info *info);
 unsigned long long		get_time(void);
+void					real_sleep(u_int64_t n);
 int						errormess(char *mess);
 int						message(t_phil *phil, int type);
 

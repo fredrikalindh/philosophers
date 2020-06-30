@@ -31,7 +31,7 @@ void		*surveil(void *philpointer)
 			pthread_mutex_unlock(phil->f2);
 			return (NULL);
 		}
-		usleep(10000);
+		real_sleep(1);
 	}
 	pthread_mutex_unlock(phil->f1);
 	pthread_mutex_unlock(phil->f2);
@@ -60,7 +60,7 @@ void		*start_phil(void *philpointer)
 			return (NULL);
 		}
 		message(phil, SLEEP);
-		usleep(1000 * (phil->info->time_to_sleep));
+		real_sleep(phil->info->time_to_sleep);
 		message(phil, THINK);
 	}
 	return (NULL);

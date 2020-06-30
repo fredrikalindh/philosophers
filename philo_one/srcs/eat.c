@@ -27,7 +27,7 @@ void	eat(t_phil *phil)
 	message(phil, FORK);
 	message(phil, EAT);
 	phil->last_eat = get_time();
-	usleep(1000 * phil->info->time_to_eat);
+	real_sleep(phil->info->time_to_eat);
 	pthread_mutex_unlock(phil->f1);
 	pthread_mutex_unlock(phil->f2);
 	++phil->times_eaten;
