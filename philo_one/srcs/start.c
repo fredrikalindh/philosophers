@@ -89,7 +89,7 @@ pthread_t	*start_program(t_info *info)
 	while (++i < info->num_phil)
 	{
 		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
-		usleep(100);
+		// usleep(100);
 	}
 	return (threads);
 }
