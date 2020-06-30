@@ -27,16 +27,14 @@ void		*surveil(void *philpointer)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
-			pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
-			pthread_mutex_unlock(
-				&phil->info->forks[phil->name % phil->info->num_phil]);
+			pthread_mutex_unlock(phil->f1);
+			pthread_mutex_unlock(phil->f2);
 			return (NULL);
 		}
-		usleep(100);
+		usleep(10000);
 	}
-	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
-	pthread_mutex_unlock(
-		&phil->info->forks[phil->name % phil->info->num_phil]);
+	pthread_mutex_unlock(phil->f1);
+	pthread_mutex_unlock(phil->f2);
 	return (NULL);
 }
 
