@@ -20,7 +20,7 @@ void	*check_if_dead(void *philpointer)
 	while (1)
 	{
 		if (!phil->eating && phil->times_eaten != phil->info.max_eat &&
-			get_time() - phil->last_eat > (uint64_t)phil->info.time_to_die)
+			get_time() - phil->last_eat > (u_int64_t)phil->info.time_to_die)
 		{
 			message(phil, DEAD);
 			sem_wait(g_dead);

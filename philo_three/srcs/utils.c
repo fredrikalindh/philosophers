@@ -20,6 +20,6 @@ u_int64_t	get_time(void)
 	if (!start.tv_sec)
 		gettimeofday(&start, NULL);
 	gettimeofday(&tv, NULL);
-	return (((tv.tv_sec - start.tv_sec) * (uint64_t)1000) +
+	return (((tv.tv_sec - start.tv_sec) * (u_int64_t)1000) +
 	((tv.tv_usec - start.tv_usec) / 1000));
 }
