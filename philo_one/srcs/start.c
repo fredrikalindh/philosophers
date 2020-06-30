@@ -46,6 +46,8 @@ void		*start_phil(void *philpointer)
 	t_phil		*phil;
 
 	phil = (t_phil *)philpointer;
+	while (!phil->info->start)
+		;
 	pthread_create(&surveiller, NULL, surveil, philpointer);
 	while (!phil->info->someone_is_dead)
 	{
@@ -85,11 +87,13 @@ pthread_t	*start_program(t_info *info)
 		phils[i]->times_eaten = 0;
 	}
 	i = -1;
-	get_time();
+	info->start = 0;
 	while (++i < info->num_phil)
 	{
 		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
 		// usleep(100);
 	}
+	get_time();
+	info->start = 1;
 	return (threads);
 }

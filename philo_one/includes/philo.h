@@ -41,6 +41,7 @@ typedef struct			s_info
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					max_eat;
+	int					start:1;
 }						t_info;
 
 typedef struct			s_phil
