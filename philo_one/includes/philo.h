@@ -11,16 +11,16 @@
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <ft_printf.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <ft_printf.h>
 
-typedef enum e_messages
+typedef enum			e_messages
 {
 	FORK,
 	EAT,
@@ -28,43 +28,43 @@ typedef enum e_messages
 	THINK,
 	DEAD,
 	ENOUGH
-} t_messages;
+}						t_messages;
 
-typedef struct s_info
+typedef struct			s_info
 {
-	int someone_is_dead;
-	pthread_mutex_t write;
-	pthread_mutex_t *forks;
-	int num_phil;
-	int phils_whos_eaten_enough;
-	int time_to_die;
-	int time_to_eat;
-	int time_to_sleep;
-	int max_eat;
-} t_info;
+	int					someone_is_dead;
+	pthread_mutex_t		write;
+	pthread_mutex_t		*forks;
+	int					num_phil;
+	int					phils_whos_eaten_enough;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					max_eat;
+}						t_info;
 
-typedef struct s_phil
+typedef struct			s_phil
 {
-	int name;
-	unsigned long long last_eat;
-	int times_eaten;
-	int is_eating;
-	t_info *info;
-} t_phil;
+	int					name;
+	unsigned long long	last_eat;
+	int					times_eaten;
+	int					is_eating;
+	t_info				*info;
+}						t_phil;
 
-typedef struct s_list
+typedef struct			s_list
 {
-	void *data;
-	struct s_list *next;
-} t_list;
+	void				*data;
+	struct s_list		*next;
+}						t_list;
 
-int free_all_malloc(void);
-int ft_atoi(char *str);
-void *mmalloc(unsigned int size);
-void eat(t_phil *phil);
-pthread_t *start_program(t_info *info);
-unsigned long long get_time(void);
-int errormess(char *mess);
-int message(t_phil *phil, int type);
+int						free_all_malloc(void);
+int						ft_atoi(char *str);
+void					*mmalloc(unsigned int size);
+void					eat(t_phil *phil);
+pthread_t				*start_program(t_info *info);
+unsigned long long		get_time(void);
+int						errormess(char *mess);
+int						message(t_phil *phil, int type);
 
 #endif

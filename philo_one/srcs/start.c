@@ -14,7 +14,7 @@
 
 void		*surveil(void *philpointer)
 {
-	t_phil		*phil;
+	t_phil *phil;
 
 	phil = (t_phil *)philpointer;
 	while (!phil->info->someone_is_dead &&
@@ -22,7 +22,8 @@ void		*surveil(void *philpointer)
 	{
 		if (!phil->is_eating && !phil->info->someone_is_dead &&
 			phil->times_eaten != phil->info->max_eat &&
-			get_time() - phil->last_eat > (uint64_t)phil->info->time_to_die)
+			get_time() - phil->last_eat >
+			(unsigned long long)phil->info->time_to_die)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
