@@ -85,7 +85,8 @@ pthread_t	*start_program(t_info *info)
 		phils[i]->last_eat = 0;
 		phils[i]->is_eating = 0;
 		phils[i]->times_eaten = 0;
-		phils[i]->forks = info->forks;
+		phils[i]->f1 = &info->forks[i];
+		phils[i]->f2 = &info->forks[(i + 1) % info->num_phil];
 	}
 	i = -1;
 	info->start = 0;
