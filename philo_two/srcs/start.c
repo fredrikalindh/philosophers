@@ -22,7 +22,7 @@ void		*surveil(void *philpointer)
 	{
 		if (!phil->eating && !phil->info->someone_is_dead &&
 			phil->times_eaten != phil->info->max_eat &&
-			get_time() - phil->last_eat > (uint64_t)phil->info->time_to_die)
+			get_time() - phil->last_eat > (u_int64_t)phil->info->time_to_die)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;

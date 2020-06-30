@@ -31,6 +31,6 @@ void	eat(t_phil *phil)
 	usleep(1000 * phil->info->time_to_eat);
 	pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
 	pthread_mutex_unlock(&phil->info->forks[phil->name % phil->info->num_phil]);
-	phil->times_eaten++;
+	++phil->times_eaten;
 	phil->is_eating = 0;
 }
