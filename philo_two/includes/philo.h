@@ -35,6 +35,7 @@ typedef struct		s_info
 {
 	sem_t			*forks;
 	sem_t			*write;
+	int				n_forks;
 	int				someone_is_dead:1;
 	int				start:1;
 	int				num_phil;

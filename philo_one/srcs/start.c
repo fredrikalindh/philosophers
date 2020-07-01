@@ -24,18 +24,18 @@ void		*surveil(void *philpointer)
 		if (!phil->info->someone_is_dead &&
 			phil->times_eaten != phil->info->max_eat &&
 			get_time() - phil->last_eat >
-			(unsigned long long)phil->info->time_to_die)
+			(u_int64_t)phil->info->time_to_die)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
 			break ;
 		}
 		pthread_mutex_unlock(&phil->is_eating);
-		usleep(1000);
+		usleep(100);
 	}
 	pthread_mutex_unlock(phil->f1);
 	pthread_mutex_unlock(phil->f2);
-	pthread_mutex_destroy(&phil->is_eating);
+	pthread_mutex_unlock(&phil->is_eating);
 	return (NULL);
 }
 
@@ -58,12 +58,13 @@ void		*start_phil(void *philpointer)
 			pthread_mutex_lock(&phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			pthread_mutex_unlock(&phil->info->write);
-			return (NULL);
+			break ; 
 		}
 		message(phil, SLEEP);
 		real_sleep(phil->info->time_to_sleep);
 		message(phil, THINK);
 	}
+	pthread_mutex_destroy(&phil->is_eating);
 	return (NULL);
 }
 

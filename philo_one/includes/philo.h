@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <ft_printf.h>
+# include <stdbool.h>
 
 typedef enum			e_messages
 {
@@ -35,6 +36,7 @@ typedef struct			s_info
 	int					someone_is_dead:1;
 	pthread_mutex_t		write;
 	pthread_mutex_t		*forks;
+	bool				*n_forks;
 	int					num_phil;
 	int					phils_whos_eaten_enough;
 	int					time_to_die;

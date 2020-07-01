@@ -26,6 +26,7 @@ int		get_info(t_info *info, int ac, char **av)
 		info->max_eat = -1;
 	info->someone_is_dead = 0;
 	info->phils_whos_eaten_enough = 0;
+	info->n_forks = info->num_phil;
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	if (!(info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil)))

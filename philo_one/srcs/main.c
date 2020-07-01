@@ -20,15 +20,18 @@ int		get_info(t_info *info, int ac, char **av)
 		(info->time_to_eat = ft_atoi(av[3])) < 0 ||
 		(info->time_to_sleep = ft_atoi(av[4])) < 0)
 		return (1);
-	if (ac == 6 && (info->max_eat = ft_atoi(av[5])) <= 0)
+	info->max_eat = (ac == 6) ? ft_atoi(av[5]) : -1;
+	if (ac == 6 && info->max_eat <= 0)
 		return (1);
-	else if (ac == 5)
-		info->max_eat = -1;
 	info->forks =
 		(pthread_mutex_t *)mmalloc(sizeof(pthread_mutex_t) * info->num_phil);
+	info->n_forks = (bool *)mmalloc(sizeof(bool) * info->num_phil);
 	ac = -1;
 	while (++ac < info->num_phil)
+	{
 		pthread_mutex_init(&info->forks[ac], NULL);
+		info->n_forks[ac] = 1;
+	}
 	info->someone_is_dead = 0;
 	info->phils_whos_eaten_enough = 0;
 	pthread_mutex_init(&info->write, NULL);
