@@ -35,6 +35,7 @@ int		get_info(t_info *info, int ac, char **av)
 	info->someone_is_dead = 0;
 	info->phils_whos_eaten_enough = 0;
 	pthread_mutex_init(&info->write, NULL);
+	pthread_mutex_init(&info->fork_check, NULL);
 	return (0);
 }
 

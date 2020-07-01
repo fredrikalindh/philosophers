@@ -35,6 +35,7 @@ typedef struct			s_info
 {
 	int					someone_is_dead:1;
 	pthread_mutex_t		write;
+	pthread_mutex_t		fork_check;
 	pthread_mutex_t		*forks;
 	bool				*n_forks;
 	int					num_phil;
