@@ -23,7 +23,7 @@ void	eat(t_phil *phil)
 		sem_post(phil->info->forks);
 		return ;
 	}
-	phil->eating = 1;
+	sem_wait(phil->eating);
 	message(phil, FORK);
 	message(phil, EAT);
 	phil->last_eat = get_time();
@@ -31,5 +31,5 @@ void	eat(t_phil *phil)
 	sem_post(phil->info->forks);
 	sem_post(phil->info->forks);
 	phil->times_eaten++;
-	phil->eating = 0;
+	sem_post(phil->eating);
 }

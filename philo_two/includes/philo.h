@@ -48,9 +48,10 @@ typedef struct		s_info
 typedef struct		s_phil
 {
 	int				name;
+	char			sem_name[2];
 	u_int64_t		last_eat;
 	int				times_eaten;
-	int				eating;
+	sem_t			*eating;
 	t_info			*info;
 }					t_phil;
 

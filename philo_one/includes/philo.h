@@ -49,7 +49,8 @@ typedef struct			s_phil
 	int					name;
 	unsigned long long	last_eat;
 	int					times_eaten;
-	int					is_eating;
+	// int					is_eating;
+	pthread_mutex_t		is_eating;
 	pthread_mutex_t		*f1;
 	pthread_mutex_t		*f2;
 	t_info				*info;

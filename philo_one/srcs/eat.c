@@ -28,7 +28,7 @@ void	eat(t_phil *phil)
 		pthread_mutex_unlock(phil->f2);
 		return ;
 	}
-	phil->is_eating = 1;
+	pthread_mutex_lock(&phil->is_eating);
 	message(phil, FORK);
 	message(phil, EAT);
 	phil->last_eat = get_time();
@@ -36,5 +36,5 @@ void	eat(t_phil *phil)
 	pthread_mutex_unlock(phil->f1);
 	pthread_mutex_unlock(phil->f2);
 	++phil->times_eaten;
-	phil->is_eating = 0;
+	pthread_mutex_unlock(&phil->is_eating);
 }
