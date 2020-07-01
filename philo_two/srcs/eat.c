@@ -21,6 +21,7 @@ void	eat(t_phil *phil)
 	{
 		sem_post(phil->info->forks);
 		sem_post(phil->info->forks);
+		sem_post(phil->eating);
 		return ;
 	}
 	sem_wait(phil->eating);
