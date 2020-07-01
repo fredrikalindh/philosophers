@@ -15,13 +15,13 @@
 void	eat(t_phil *phil)
 {
 	while (!phil->info->n_forks[phil->name - 1] && 
-		!phil->info->n_forks[phil->name % phil->info->num_phil] &&
-		!phil->info->someone_is_dead)
+		!phil->info->n_forks[phil->name % phil->info->num_phil])
 		;
-	pthread_mutex_lock(phil->f2);
-	pthread_mutex_lock(phil->f1);
 	phil->info->n_forks[phil->name - 1] = 0;
 	phil->info->n_forks[phil->name % phil->info->num_phil] = 0;
+	pthread_mutex_lock(phil->f1);
+	pthread_mutex_lock(phil->f2);
+	message(phil, FORK);
 	if (!phil->info->someone_is_dead)
 	{
 		pthread_mutex_lock(&phil->is_eating);
