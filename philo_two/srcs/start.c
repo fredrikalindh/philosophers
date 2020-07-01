@@ -27,9 +27,7 @@ void		*surveil(void *philpointer)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
-			sem_close(phil->eating);
-			sem_unlink(phil->sem_name);
-			return (NULL);
+			break ;
 		}
 		sem_post(phil->eating);
 		usleep(1000);
@@ -47,6 +45,8 @@ void		*start_phil(void *philpointer)
 	phil = (t_phil *)philpointer;
 	while (!phil->info->start)
 		;
+	if (phil->name % 2)
+		usleep(100);
 	pthread_create(&surveiller, NULL, surveil, philpointer);
 	while (!phil->info->someone_is_dead)
 	{
@@ -57,10 +57,10 @@ void		*start_phil(void *philpointer)
 			sem_wait(phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			sem_post(phil->info->write);
-			return (NULL);
+			break ;
 		}
 		message(phil, SLEEP);
-		usleep(1000 * (phil->info->time_to_sleep));
+		real_sleep(phil->info->time_to_sleep);
 		message(phil, THINK);
 	}
 	return (NULL);
@@ -80,17 +80,15 @@ pthread_t	*start_program(t_info *info)
 		phils[i] = (t_phil *)mmalloc(sizeof(t_phil));
 		phils[i]->info = info;
 		phils[i]->name = i + 1;
-		phils[i]->sem_name[0] = phils[i]->name + '0';
-		phils[i]->sem_name[1] = '\0';
 		phils[i]->last_eat = 0;
 		phils[i]->times_eaten = 0;
+		phils[i]->sem_name[0] = phils[i]->name + '0';
+		phils[i]->sem_name[1] = '\0';
+		sem_unlink(phils[i]->sem_name);
 		phils[i]->eating = sem_open(phils[i]->sem_name, O_CREAT, S_IRWXU, 1);
-		// phils[i]->eating = 0;
-
 	}
-	i = -1;
 	info->start = 0;
-	while (++i < info->num_phil)
+	while (i--)
 		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
 	info->start = 1;
 	get_time();

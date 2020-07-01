@@ -24,9 +24,9 @@ u_int64_t	get_time(void)
 			((tv.tv_usec - start.tv_usec) / 1000));
 }
 
-void	real_sleep(u_int64_t n)
+void		real_sleep(u_int64_t n)
 {
-	u_int64_t start;
+	u_int64_t				start;
 
 	start = get_time();
 	while (get_time() - start < n)

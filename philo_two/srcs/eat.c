@@ -28,7 +28,7 @@ void	eat(t_phil *phil)
 	message(phil, FORK);
 	message(phil, EAT);
 	phil->last_eat = get_time();
-	usleep(1000 * phil->info->time_to_eat);
+	real_sleep(phil->info->time_to_eat);
 	sem_post(phil->info->forks);
 	sem_post(phil->info->forks);
 	phil->times_eaten++;

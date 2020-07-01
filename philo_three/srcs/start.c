@@ -19,13 +19,15 @@ void	*check_if_dead(void *philpointer)
 	phil = (t_phil *)philpointer;
 	while (1)
 	{
-		if (!phil->eating && phil->times_eaten != phil->info.max_eat &&
+		sem_wait(phil->eating);
+		if (phil->times_eaten != phil->info.max_eat &&
 			get_time() - phil->last_eat > (u_int64_t)phil->info.time_to_die)
 		{
 			message(phil, DEAD);
 			sem_wait(g_dead);
 			exit(1);
 		}
+		sem_post(phil->eating);
 		usleep(100);
 	}
 	return (NULL);
@@ -47,7 +49,7 @@ void	start_phil(t_phil phil)
 			exit(0);
 		}
 		message(&phil, SLEEP);
-		usleep(1000 * (phil.info.time_to_sleep));
+		real_sleep(phil.info.time_to_sleep);
 		message(&phil, THINK);
 	}
 }
@@ -66,17 +68,16 @@ pid_t	*start_program(t_info info)
 		phil.name = i + 1;
 		phil.times_eaten = 0;
 		phil.eating = 0;
+		phil.sem_name[0] = phil.name + '0';
+		phil.sem_name[1] = '\0';
+		sem_unlink(phil.sem_name);
+		phil.eating = sem_open(phil.sem_name, O_CREAT, S_IRWXU, 1);
 		if ((pids[i] = fork()) < 0)
-		{
-			ft_printf("fork failed\n");
-			exit(1);
-		}
+			exit(ft_printf("fork failed\n"));
 		if (!pids[i])
 			start_phil(phil);
 	}
 	while (i--)
-	{
 		sem_post(g_start);
-	}
 	return (pids);
 }

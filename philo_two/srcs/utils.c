@@ -23,3 +23,12 @@ u_int64_t	get_time(void)
 	return (((tv.tv_sec - start.tv_sec) * (u_int64_t)1000) +
 	((tv.tv_usec - start.tv_usec) / 1000));
 }
+
+void		real_sleep(u_int64_t n)
+{
+	u_int64_t				start;
+
+	start = get_time();
+	while (get_time() - start < n)
+		usleep(1000);
+}

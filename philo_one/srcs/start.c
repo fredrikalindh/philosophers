@@ -28,10 +28,7 @@ void		*surveil(void *philpointer)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
-			pthread_mutex_unlock(phil->f1);
-			pthread_mutex_unlock(phil->f2);
-			pthread_mutex_destroy(&phil->is_eating);
-			return (NULL);
+			break ;
 		}
 		pthread_mutex_unlock(&phil->is_eating);
 		usleep(1000);

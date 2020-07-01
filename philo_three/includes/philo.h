@@ -53,7 +53,8 @@ typedef struct		s_phil
 	int				name;
 	u_int64_t		last_eat;
 	int				times_eaten;
-	int				eating;
+	char			sem_name[2];
+	sem_t			*eating;
 	t_info			info;
 }					t_phil;
 
@@ -69,6 +70,7 @@ void				*mmalloc(unsigned int size);
 void				eat(t_phil *phil);
 pid_t				*start_program(t_info info);
 u_int64_t			get_time(void);
+void				real_sleep(u_int64_t n);
 int					errormess(char *mess);
 int					message(t_phil *phil, int type);
 
