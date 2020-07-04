@@ -45,9 +45,11 @@ void	start_phil(t_phil phil)
 		eat(&phil);
 		if (phil.info.max_eat > 0 && phil.times_eaten == phil.info.max_eat)
 		{
-			message(&phil, ENOUGH);
+			// message(&phil, ENOUGH);
 			exit(0);
 		}
+		sem_post(g_forks);
+		sem_post(g_forks);
 		message(&phil, SLEEP);
 		real_sleep(phil.info.time_to_sleep);
 		message(&phil, THINK);

@@ -28,7 +28,7 @@ void	eat(t_phil *phil)
 		real_sleep(phil->info->time_to_eat);
 		phil->times_eaten++;
 	}
-	sem_post(phil->info->forks);
-	sem_post(phil->info->forks);
 	sem_post(phil->eating);
+	sem_post(phil->info->forks);
+	sem_post(phil->info->forks);
 }

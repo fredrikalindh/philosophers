@@ -26,8 +26,8 @@ void	eat(t_phil *phil)
 	message(phil, EAT);
 	phil->last_eat = get_time();
 	real_sleep(phil->info.time_to_eat);
-	sem_post(g_forks);
-	sem_post(g_forks);
+	// sem_post(g_forks);
+	// sem_post(g_forks);
 	phil->times_eaten++;
 	sem_post(phil->eating);
 }
