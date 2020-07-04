@@ -38,6 +38,7 @@ sem_t			*g_forks;
 sem_t			*g_start;
 sem_t			*g_write;
 sem_t			*g_dead;
+sem_t			*g_someone_picking;
 
 typedef struct		s_info
 {

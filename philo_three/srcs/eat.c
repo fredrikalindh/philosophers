@@ -14,9 +14,11 @@
 
 void	eat(t_phil *phil)
 {
+	sem_wait(g_someone_picking);
 	sem_wait(g_forks);
 	message(phil, FORK);
 	sem_wait(g_forks);
+	sem_post(g_someone_picking);
 	sem_wait(g_dead);
 	sem_post(g_dead);
 	sem_wait(phil->eating);

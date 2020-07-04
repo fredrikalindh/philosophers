@@ -28,10 +28,12 @@ int		get_info(t_info *info, int ac, char **av)
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	sem_unlink("/sdead");
+	sem_unlink("/ssomeone_picking");
 	g_start = sem_open("/sstart", O_CREAT, S_IRWXU, 0);
 	g_forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil);
 	g_write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
 	g_dead = sem_open("/sdead", O_CREAT, S_IRWXU, 1);
+	g_someone_picking = sem_open("/ssomeone_picking", O_CREAT, S_IRWXU, 1);
 	return (0);
 }
 
