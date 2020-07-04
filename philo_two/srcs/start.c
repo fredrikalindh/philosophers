@@ -43,8 +43,6 @@ void		*start_phil(void *philpointer)
 	phil = (t_phil *)philpointer;
 	while (!phil->info->start)
 		;
-	if (phil->name % 2)
-		usleep(100);
 	pthread_create(&surveiller, NULL, surveil, philpointer);
 	while (!phil->info->someone_is_dead)
 	{

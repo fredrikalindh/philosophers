@@ -38,14 +38,14 @@ void	start_phil(t_phil phil)
 	pthread_t	surveiller;
 
 	sem_wait(g_start);
-	phil.last_eat = get_time();
+	get_time();
 	pthread_create(&surveiller, NULL, check_if_dead, (void *)&phil);
 	while (1)
 	{
 		eat(&phil);
 		if (phil.info.max_eat > 0 && phil.times_eaten == phil.info.max_eat)
 		{
-			// message(&phil, ENOUGH);
+			message(&phil, ENOUGH);
 			exit(0);
 		}
 		sem_post(g_forks);

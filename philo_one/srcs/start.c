@@ -58,7 +58,7 @@ void		*start_phil(void *philpointer)
 			pthread_mutex_lock(&phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			pthread_mutex_unlock(&phil->info->write);
-			break ; 
+			break ;
 		}
 		message(phil, SLEEP);
 		real_sleep(phil->info->time_to_sleep);
