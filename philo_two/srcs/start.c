@@ -32,8 +32,6 @@ void		*surveil(void *philpointer)
 		sem_post(phil->eating);
 		usleep(1000);
 	}
-	sem_close(phil->eating);
-	sem_unlink(phil->sem_name);
 	return (NULL);
 }
 
@@ -63,6 +61,8 @@ void		*start_phil(void *philpointer)
 		real_sleep(phil->info->time_to_sleep);
 		message(phil, THINK);
 	}
+	sem_close(phil->eating);
+	sem_unlink(phil->sem_name);
 	return (NULL);
 }
 
