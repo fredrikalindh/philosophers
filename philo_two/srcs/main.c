@@ -32,7 +32,7 @@ int		get_info(t_info *info, int ac, char **av)
 	if (!(info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil)))
 		printf("error with sem open\n");
 	info->write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
-	info->write = sem_open("/ssomeone_picking", O_CREAT, S_IRWXU, 1);
+	info->someone_picking = sem_open("/ssomeone_picking", O_CREAT, S_IRWXU, 1);
 	return (0);
 }
 
