@@ -26,13 +26,12 @@ int		get_info(t_info *info, int ac, char **av)
 		info->max_eat = -1;
 	info->someone_is_dead = 0;
 	info->phils_whos_eaten_enough = 0;
+	info->n_forks = info->num_phil;
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
-	sem_unlink("/ssomeone_picking");
 	if (!(info->forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil)))
 		printf("error with sem open\n");
 	info->write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
-	info->write = sem_open("/ssomeone_picking", O_CREAT, S_IRWXU, 1);
 	return (0);
 }
 
@@ -40,10 +39,8 @@ void	destroy_sem(t_info info)
 {
 	sem_close(info.forks);
 	sem_close(info.write);
-	sem_close(info.someone_picking);
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
-	sem_unlink("/ssomeone_picking");
 }
 
 int		main(int ac, char **av)
