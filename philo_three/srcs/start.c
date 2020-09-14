@@ -25,10 +25,11 @@ void	*check_if_dead(void *philpointer)
 		{
 			message(phil, DEAD);
 			sem_wait(g_dead);
+			// free_all_malloc();
 			exit(1);
 		}
 		sem_post(phil->eating);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -46,6 +47,7 @@ void	start_phil(t_phil phil)
 		if (phil.info.max_eat > 0 && phil.times_eaten == phil.info.max_eat)
 		{
 			message(&phil, ENOUGH);
+			// free_all_malloc();
 			exit(0);
 		}
 		sem_post(g_forks);
@@ -79,7 +81,7 @@ pid_t	*start_program(t_info info)
 		if (!pids[i])
 			start_phil(phil);
 	}
-	while (i--)
+	while (1 + i--)
 		sem_post(g_start);
 	return (pids);
 }

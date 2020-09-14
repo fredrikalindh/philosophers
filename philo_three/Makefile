@@ -14,7 +14,7 @@
 
 NAME					=	philo_three
 
-CC						=	gcc
+CC						=	clang
 
 FLAGS					=	-Wall -Wextra -Werror \
 							-g3 -fsanitize=address \
