@@ -31,7 +31,7 @@ void		*surveil(void *philpointer)
 			break ;
 		}
 		pthread_mutex_unlock(&phil->is_eating);
-		usleep(1000);
+		usleep(100);
 	}
 	pthread_mutex_unlock(phil->f1);
 	pthread_mutex_unlock(phil->f2);

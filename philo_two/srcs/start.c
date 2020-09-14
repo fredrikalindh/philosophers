@@ -30,7 +30,7 @@ void		*surveil(void *philpointer)
 			break ;
 		}
 		sem_post(phil->eating);
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }

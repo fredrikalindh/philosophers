@@ -29,7 +29,7 @@ void	*check_if_dead(void *philpointer)
 			exit(1);
 		}
 		sem_post(phil->eating);
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }
