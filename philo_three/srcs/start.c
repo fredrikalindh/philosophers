@@ -50,8 +50,8 @@ void	start_phil(t_phil phil)
 			// free_all_malloc();
 			exit(0);
 		}
-		sem_post(g_forks);
-		sem_post(g_forks);
+		// sem_post(g_forks);
+		// sem_post(g_forks);
 		message(&phil, SLEEP);
 		real_sleep(phil.info.time_to_sleep);
 		message(&phil, THINK);
