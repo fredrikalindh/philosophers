@@ -19,15 +19,15 @@ void	eat(t_phil *phil)
 	message(phil, FORK);
 	sem_wait(g_forks);
 	sem_post(g_someone_picking);
-	sem_wait(g_dead);
-	sem_post(g_dead);
+//	sem_wait(g_dead);
+//	sem_post(g_dead);
 	sem_wait(phil->eating);
 	message(phil, FORK);
 	message(phil, EAT);
 	phil->last_eat = get_time();
 	real_sleep(phil->info.time_to_eat);
+	sem_post(g_forks);
+	sem_post(g_forks);
 	phil->times_eaten++;
 	sem_post(phil->eating);
-	sem_post(g_forks);
-	sem_post(g_forks);
 }

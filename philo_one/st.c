@@ -20,22 +20,22 @@ void		*surveil(void *philpointer)
 	while (!phil->info->someone_is_dead &&
 		phil->times_eaten != phil->info->max_eat)
 	{
-		pthread_mutex_lock(&phil->is_eating);
-		if (!phil->info->someone_is_dead &&
+		if (!phil->is_eating && !phil->info->someone_is_dead &&
 			phil->times_eaten != phil->info->max_eat &&
 			get_time() - phil->last_eat >
-			(u_int64_t)phil->info->time_to_die)
+			(unsigned long long)phil->info->time_to_die)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
-			break ;
+			pthread_mutex_unlock(&phil->info->forks[phil->name - 1]);
+			pthread_mutex_unlock(
+				&phil->info->forks[phil->name % phil->info->num_phil]);
+			return (NULL);
 		}
-		pthread_mutex_unlock(&phil->is_eating);
-		usleep(100);
+		usleep(8000);
 	}
-	pthread_mutex_unlock(phil->f1);
 	pthread_mutex_unlock(phil->f2);
-	pthread_mutex_unlock(&phil->is_eating);
+	pthread_mutex_unlock(phil->f2);
 	return (NULL);
 }
 
@@ -58,13 +58,12 @@ void		*start_phil(void *philpointer)
 			pthread_mutex_lock(&phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			pthread_mutex_unlock(&phil->info->write);
-			break ;
+			return (NULL);
 		}
 		message(phil, SLEEP);
-		real_sleep(phil->info->time_to_sleep);
+		usleep(1000 * (phil->info->time_to_sleep));
 		message(phil, THINK);
 	}
-	pthread_mutex_destroy(&phil->is_eating);
 	return (NULL);
 }
 
@@ -83,15 +82,18 @@ pthread_t	*start_program(t_info *info)
 		phils[i]->info = info;
 		phils[i]->name = i + 1;
 		phils[i]->last_eat = 0;
+		phils[i]->is_eating = 0;
 		phils[i]->times_eaten = 0;
 		phils[i]->f1 = &info->forks[i];
 		phils[i]->f2 = &info->forks[(i + 1) % info->num_phil];
-		pthread_mutex_init(&phils[i]->is_eating, NULL);
 	}
 	i = -1;
 	info->start = 0;
 	while (++i < info->num_phil)
+	{
 		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
+		// usleep(100);
+	}
 	info->start = 1;
 	get_time();
 	return (threads);

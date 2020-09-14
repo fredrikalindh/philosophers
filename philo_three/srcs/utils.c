@@ -30,5 +30,5 @@ void		real_sleep(u_int64_t n)
 
 	start = get_time();
 	while (get_time() - start < n)
-		usleep(1000);
+		usleep(10);
 }
