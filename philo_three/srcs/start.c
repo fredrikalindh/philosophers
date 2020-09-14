@@ -79,7 +79,7 @@ pid_t	*start_program(t_info info)
 		if (!pids[i])
 			start_phil(phil);
 	}
-	while (1 + i--)
+	while (i--)
 		sem_post(g_start);
 	return (pids);
 }

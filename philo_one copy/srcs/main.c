@@ -59,7 +59,7 @@ int		main(int ac, char **av)
 		return (errormess("error: fatal"));
 	while (!info.someone_is_dead &&
 		info.phils_whos_eaten_enough < info.num_phil)
-		usleep(100);
+		usleep(1000);
 	while (info.num_phil-- > 0)
 		pthread_join(threads[info.num_phil], NULL);
 	destroy_mutexes(info, info.num_phil);
