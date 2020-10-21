@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:39:50 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:43:00 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	*check_if_dead(void *philpointer)
 		{
 			message(phil->name, DEAD);
 			sem_wait(g_dead);
-			sem_wait(g_write);
 			free_all_malloc();
 			exit(1);
 		}
