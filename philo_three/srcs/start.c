@@ -35,7 +35,7 @@ void	*check_if_dead(void *philpointer)
 	return (NULL);
 }
 
-void ft_sync(int phils)
+void	ft_sync(int phils)
 {
 	while (get_time(0) < (u_int64_t)200 * phils)
 		;

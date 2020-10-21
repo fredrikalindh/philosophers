@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/24 17:16:53 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:28:13 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		get_info(t_info *info, int ac, char **av)
 		return (1);
 	info->forks =
 		(pthread_mutex_t *)mmalloc(sizeof(pthread_mutex_t) * info->num_phil);
-	// info->n_forks = (bool *)mmalloc(sizeof(bool) * info->num_phil);
 	ac = -1;
 	while (++ac < info->num_phil)
 		pthread_mutex_init(&info->forks[ac], NULL);

@@ -6,27 +6,28 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:25:17 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 13:56:12 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:28:49 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-
-int ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str && str[i])
 		++i;
-	return i;
+	return (i);
 }
 
-void ft_putnbr(uint64_t time)
+void	ft_putnbr(uint64_t time)
 {
-	int index = 300;
-	char time_string[300];
+	int		index;
+	char	time_string[100];
+
+	index = 100;
 	time_string[--index] = ' ';
 	if (!time)
 	{
@@ -38,7 +39,7 @@ void ft_putnbr(uint64_t time)
 		time_string[--index] = (time % 10) + '0';
 		time /= 10;
 	}
-	write(1, &time_string[index], 300 - index);
+	write(1, &time_string[index], 100 - index);
 }
 
 int		errormess(char *mess)
@@ -60,4 +61,3 @@ int		message(t_phil *phil, char *message)
 	sem_post(phil->info->write);
 	return (0);
 }
-

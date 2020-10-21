@@ -31,7 +31,6 @@
 # define THINK "is thinking\n"
 # define DEAD "died\n"
 # define ENOUGH "has eaten enough\n"
-
 # define TIME_TO_SYNC 1000
 
 sem_t			*g_forks;
