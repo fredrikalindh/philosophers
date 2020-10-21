@@ -50,10 +50,7 @@ int		errormess(char *mess)
 int		message(int name, char *message)
 {
 	sem_wait(g_write);
-	sem_wait(g_dead);
-	sem_post(g_dead);
-
-	ft_putnbr(get_time());
+	ft_putnbr(get_time(0));
 	ft_putnbr(name);
 	write(1, message, ft_strlen(message));
 	sem_post(g_write);

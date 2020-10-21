@@ -32,10 +32,7 @@
 # define DEAD "died\n"
 # define ENOUGH "has eaten enough\n"
 
-#define S_WRITE "/write"
-#define S_PICK "/pick"
-#define S_FORKS "/forks"
-#define S_EAT "/eat"
+# define TIME_TO_SYNC 1000
 
 sem_t			*g_forks;
 sem_t			*g_start;
@@ -74,8 +71,7 @@ int					ft_atoi(char *str);
 void				*mmalloc(unsigned int size);
 void				eat(t_phil *phil);
 pid_t				*start_program(t_info info);
-// t_phil				*start_program(t_info info);
-u_int64_t			get_time(void);
+u_int64_t			get_time(int reset);
 void				real_sleep(u_int64_t n);
 int					errormess(char *mess);
 int					message(int name, char *message);
