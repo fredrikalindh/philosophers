@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:25:17 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:39:38 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:49:12 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_putnbr(uint64_t time)
+void	ft_putnbr(u_int64_t time)
 {
 	int		index;
 	char	time_string[100];
