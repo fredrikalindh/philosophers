@@ -19,17 +19,14 @@
 # include <sys/time.h>
 # include <fcntl.h>
 # include <pthread.h>
-# include <ft_printf.h>
 # include <semaphore.h>
 
-typedef enum	e_messages {
-	FORK,
-	EAT,
-	SLEEP,
-	THINK,
-	DEAD,
-	ENOUGH
-}				t_messages;
+# define FORK "has taken a fork\n"
+# define EAT "is eating\n"
+# define SLEEP "is sleeping\n"
+# define THINK "is thinking\n"
+# define DEAD "died\n"
+# define ENOUGH "has eaten enough\n"
 
 typedef struct		s_info
 {
@@ -70,6 +67,6 @@ pthread_t			*start_program(t_info *info);
 u_int64_t			get_time(void);
 void				real_sleep(u_int64_t n);
 int					errormess(char *mess);
-int					message(t_phil *phil, int type);
+int					message(t_phil *phil, char *message);
 
 #endif

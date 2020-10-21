@@ -22,13 +22,13 @@ void	*mmalloc(unsigned int size)
 	if (!(new = malloc(size + 1)))
 	{
 		free_all_malloc();
-		ft_dprintf(2, "allocation error");
+		write(2, "allocation error", 16);
 		exit(1);
 	}
 	if (!(list = (t_list *)malloc(sizeof(t_list))))
 	{
 		free_all_malloc();
-		ft_dprintf(2, "allocation error");
+		write(2, "allocation error", 16);
 		exit(1);
 	}
 	list->data = new;

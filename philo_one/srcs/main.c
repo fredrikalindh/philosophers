@@ -25,17 +25,13 @@ int		get_info(t_info *info, int ac, char **av)
 		return (1);
 	info->forks =
 		(pthread_mutex_t *)mmalloc(sizeof(pthread_mutex_t) * info->num_phil);
-	info->n_forks = (bool *)mmalloc(sizeof(bool) * info->num_phil);
+	// info->n_forks = (bool *)mmalloc(sizeof(bool) * info->num_phil);
 	ac = -1;
 	while (++ac < info->num_phil)
-	{
 		pthread_mutex_init(&info->forks[ac], NULL);
-		info->n_forks[ac] = 1;
-	}
 	info->someone_is_dead = 0;
 	info->phils_whos_eaten_enough = 0;
 	pthread_mutex_init(&info->write, NULL);
-	pthread_mutex_init(&info->fork_check, NULL);
 	return (0);
 }
 

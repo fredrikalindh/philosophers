@@ -21,18 +21,21 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <pthread.h>
-# include <ft_printf.h>
 # include <semaphore.h>
 # include <signal.h>
+# include <limits.h>
 
-typedef enum	e_messages {
-	FORK,
-	EAT,
-	SLEEP,
-	THINK,
-	DEAD,
-	ENOUGH
-}				t_messages;
+# define FORK "has taken a fork\n"
+# define EAT "is eating\n"
+# define SLEEP "is sleeping\n"
+# define THINK "is thinking\n"
+# define DEAD "died\n"
+# define ENOUGH "has eaten enough\n"
+
+#define S_WRITE "/write"
+#define S_PICK "/pick"
+#define S_FORKS "/forks"
+#define S_EAT "/eat"
 
 sem_t			*g_forks;
 sem_t			*g_start;
@@ -57,6 +60,7 @@ typedef struct		s_phil
 	char			sem_name[2];
 	sem_t			*eating;
 	t_info			info;
+	pid_t			pid;
 }					t_phil;
 
 typedef struct		s_list
@@ -70,9 +74,10 @@ int					ft_atoi(char *str);
 void				*mmalloc(unsigned int size);
 void				eat(t_phil *phil);
 pid_t				*start_program(t_info info);
+// t_phil				*start_program(t_info info);
 u_int64_t			get_time(void);
 void				real_sleep(u_int64_t n);
 int					errormess(char *mess);
-int					message(t_phil *phil, int type);
+int					message(int name, char *message);
 
 #endif

@@ -35,15 +35,6 @@ HEADER					=	philo.h \
 
 SRCS_DIR				=	./srcs/
 
-SRCS_PRINTF				=	\
-							ft_printf/to_n.c \
-							ft_printf/skip_atoi.c \
-							ft_printf/ft_strnlen.c \
-							ft_printf/to_c.c \
-							ft_printf/ft_printf.c \
-							ft_printf/to_nbr.c \
-							ft_printf/to_s.c \
-
 SRCS_LIST				=	main.c \
 							messages.c \
 							eat.c \
