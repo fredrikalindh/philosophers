@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 14:19:45 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:32:51 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void		*start_phil(void *philpointer)
 		if (!phil->info->someone_is_dead &&
 			phil->times_eaten == phil->info->max_eat)
 		{
-			message(phil, ENOUGH);
 			pthread_mutex_lock(&phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			pthread_mutex_unlock(&phil->info->write);

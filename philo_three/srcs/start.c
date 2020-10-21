@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/04/15 23:20:18 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:39:50 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	start_phil(t_phil phil)
 		eat(&phil);
 		if (phil.times_eaten == phil.info.max_eat)
 		{
-			message(phil.name, ENOUGH);
 			free_all_malloc();
 			exit(0);
 		}

@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/04/15 23:11:13 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:33:35 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define SLEEP "is sleeping\n"
 # define THINK "is thinking\n"
 # define DEAD "died\n"
-# define ENOUGH "has eaten enough\n"
 # define TIME_TO_SYNC 1000
 
 sem_t			*g_forks;

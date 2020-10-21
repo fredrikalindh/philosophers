@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:25:17 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:26:10 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:39:38 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int		errormess(char *mess)
 int		message(int name, char *message)
 {
 	sem_wait(g_write);
+	sem_wait(g_dead);
+	sem_post(g_dead);
 	ft_putnbr(get_time(0));
 	ft_putnbr(name);
 	write(1, message, ft_strlen(message));

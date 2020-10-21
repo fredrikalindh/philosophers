@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 14:18:32 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:33:16 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void		*start_phil(void *philpointer)
 		eat(phil);
 		if (phil->times_eaten == phil->info->max_eat)
 		{
-			message(phil, ENOUGH);
 			sem_wait(phil->info->write);
 			phil->info->phils_whos_eaten_enough++;
 			sem_post(phil->info->write);

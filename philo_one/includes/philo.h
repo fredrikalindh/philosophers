@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 13:52:43 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/21 16:32:39 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define SLEEP "is sleeping\n"
 # define THINK "is thinking\n"
 # define DEAD "died\n"
-# define ENOUGH "has eaten enough\n"
 
 typedef struct			s_info
 {
