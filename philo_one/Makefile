@@ -6,7 +6,7 @@
 #    By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/08 16:41:33 by fredrika          #+#    #+#              #
-#    Updated: 2020/10/27 09:49:24 by fredrikalindh    ###   ########.fr        #
+#    Updated: 2020/10/27 11:58:45 by fredrikalindh    ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME					=	philo_one
 
 CC						=	gcc
 
-FLAGS					=	-Wall -Wextra -Werror 
+FLAGS					=	-Wall -Wextra -Werror
 
 
 # *** PROJECT HEADER ********************************************************* #
@@ -26,8 +26,7 @@ HDIR					=	$(addprefix -I, $(HEADER_DIR))
 HEADER_DIR				=	\
 							./includes/
 
-HEADER					=	philo.h \
-							ft_printf.h \
+HEADER					=	philo.h
 
 # *** SRCS ******************************************************************* #
 
@@ -38,8 +37,7 @@ SRCS_LIST				=	main.c \
 							eat.c \
 							start.c \
 							utils.c \
-							mmalloc.c \
-							ft_atoi.c \
+							ft_atoi.c 
 
 SRCS					=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 

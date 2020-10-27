@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:39:25 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:33:03 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 12:12:17 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct		s_phil
 	char			sem_name[2];
 	sem_t			*eating;
 	t_info			*info;
+	pthread_t		thread;
 }					t_phil;
 
 typedef struct		s_list
@@ -58,11 +59,9 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-int					free_all_malloc(void);
 int					ft_atoi(char *str);
-void				*mmalloc(unsigned int size);
 void				eat(t_phil *phil);
-pthread_t			*start_program(t_info *info);
+t_phil				**start_program(t_info *info);
 u_int64_t			get_time(void);
 void				real_sleep(u_int64_t n);
 int					errormess(char *mess);

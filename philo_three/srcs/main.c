@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/27 09:49:46 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 12:25:03 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ int		get_info(t_info *info, int ac, char **av)
 		return (1);
 	else if (ac == 5)
 		info->max_eat = -1;
-	sem_unlink("/sstart");
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	sem_unlink("/sdead");
 	sem_unlink("/ssomeone_picking");
-	g_start = sem_open("/sstart", O_CREAT, S_IRWXU, 0);
 	g_forks = sem_open("/sforks", O_CREAT, S_IRWXU, info->num_phil);
 	g_write = sem_open("/swrite", O_CREAT, S_IRWXU, 1);
 	g_dead = sem_open("/sdead", O_CREAT, S_IRWXU, 1);
@@ -38,12 +36,10 @@ int		get_info(t_info *info, int ac, char **av)
 
 void	destroy_sem(void)
 {
-	sem_close(g_start);
 	sem_close(g_forks);
 	sem_close(g_write);
 	sem_close(g_dead);
 	sem_close(g_someone_picking);
-	sem_unlink("/sstart");
 	sem_unlink("/sforks");
 	sem_unlink("/swrite");
 	sem_unlink("/sdead");
@@ -66,7 +62,7 @@ int		main(int ac, char **av)
 	while (!(someones_dead = 0))
 	{
 		if (waitpid(-1, &someones_dead, 0) < 0 || ((WIFEXITED(someones_dead)
-				|| WIFSIGNALED(someones_dead)) && !someones_dead))
+				|| WIFSIGNALED(someones_dead)) && someones_dead))
 		{
 			i = -1;
 			while (++i < info.num_phil)
@@ -75,6 +71,6 @@ int		main(int ac, char **av)
 		}
 	}
 	destroy_sem();
-	free_all_malloc();
+	free(pids);
 	return (0);
 }

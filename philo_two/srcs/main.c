@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/22 20:42:30 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 12:24:18 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,38 @@ void	destroy_sem(t_info info)
 	sem_unlink("/ssomeone_picking");
 }
 
+void	free_all_malloc(t_info *info, t_phil **phils)
+{
+	int		i;
+
+	i = -1;
+	while (++i < info->num_phil)
+		free(phils[i]);
+	free(phils);
+}
+
 int		main(int ac, char **av)
 {
 	t_info		info;
-	pthread_t	*threads;
+	t_phil		**phils;
+	int			i;
 
 	if (ac < 5 || ac > 6)
 		return (errormess("error: wrong number of arguments"));
 	if (get_info(&info, ac, av))
 		return (errormess("error: arguments"));
-	if (!(threads = start_program(&info)))
+	if (!(phils = start_program(&info)))
 		return (errormess("error: fatal"));
 	while (!info.someone_is_dead &&
 		info.phils_whos_eaten_enough < info.num_phil)
 		usleep(100);
-	while (info.num_phil-- > 0)
+	i = -1;
+	while (++i < info.num_phil)
 	{
 		sem_post(info.forks);
-		pthread_join(threads[info.num_phil], NULL);
+		pthread_join(phils[i]->thread, NULL);
 	}
 	destroy_sem(info);
-	free_all_malloc();
+	free_all_malloc(&info, phils);
 	return (0);
 }

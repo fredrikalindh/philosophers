@@ -6,7 +6,7 @@
 #    By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/08 16:41:33 by fredrika          #+#    #+#              #
-#    Updated: 2020/10/27 09:53:34 by fredrikalindh    ###   ########.fr        #
+#    Updated: 2020/10/27 12:11:00 by fredrikalindh    ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,7 @@ HDIR					=	$(addprefix -I, $(HEADER_DIR))
 HEADER_DIR				=	\
 							./includes/
 
-HEADER					=	philo.h \
-							ft_printf.h \
+HEADER					=	philo.h 
 
 # *** SRCS ******************************************************************* #
 
@@ -38,7 +37,6 @@ SRCS_LIST				=	main.c \
 							eat.c \
 							start.c \
 							utils.c \
-							mmalloc.c \
 							ft_atoi.c \
 							$(SRCS_PRINTF)
 

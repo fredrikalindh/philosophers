@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/22 20:46:08 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 11:49:56 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	*check_if_dead(void *philpointer)
 		{
 			message(phil->name, DEAD);
 			sem_wait(g_dead);
-			free_all_malloc();
 			exit(1);
 		}
 		sem_post(phil->eating);
@@ -40,10 +39,11 @@ void	ft_sync(int phils)
 		;
 }
 
-void	start_phil(t_phil phil)
+void	start_phil(t_phil phil, pid_t *pids)
 {
 	pthread_t surveiller;
 
+	free(pids);
 	ft_sync(phil.info.num_phil);
 	phil.last_eat = get_time(1);
 	pthread_create(&surveiller, NULL, check_if_dead, (void *)&phil);
@@ -51,10 +51,7 @@ void	start_phil(t_phil phil)
 	{
 		eat(&phil);
 		if (phil.times_eaten == phil.info.max_eat)
-		{
-			free_all_malloc();
 			exit(0);
-		}
 		message(phil.name, SLEEP);
 		real_sleep(phil.info.time_to_sleep);
 		message(phil.name, THINK);
@@ -68,7 +65,7 @@ pid_t	*start_program(t_info info)
 	pid_t	*pids;
 
 	i = -1;
-	pids = (pid_t *)mmalloc(sizeof(pid_t) * info.num_phil);
+	pids = (pid_t *)malloc(sizeof(pid_t) * info.num_phil);
 	get_time(0);
 	while (++i < info.num_phil)
 	{
@@ -83,9 +80,7 @@ pid_t	*start_program(t_info info)
 		if ((pids[i] = fork()) < 0)
 			exit(errormess("fork failed\n"));
 		if (!pids[i])
-			start_phil(phil);
+			start_phil(phil, pids);
 	}
-	while (--i >= 0)
-		sem_post(g_start);
 	return (pids);
 }

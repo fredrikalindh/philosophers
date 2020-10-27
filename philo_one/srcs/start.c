@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:32:51 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 12:12:35 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,16 @@ void		*start_phil(void *philpointer)
 	return (NULL);
 }
 
-pthread_t	*start_program(t_info *info)
+t_phil		**start_program(t_info *info)
 {
 	t_phil		**phils;
 	int			i;
-	pthread_t	*threads;
 
 	i = -1;
-	threads = (pthread_t *)mmalloc(sizeof(pthread_t) * info->num_phil);
-	phils = (t_phil **)mmalloc(sizeof(t_phil *) * info->num_phil);
+	phils = (t_phil **)malloc(sizeof(t_phil *) * info->num_phil);
 	while (++i < info->num_phil)
 	{
-		phils[i] = (t_phil *)mmalloc(sizeof(t_phil));
+		phils[i] = (t_phil *)malloc(sizeof(t_phil));
 		phils[i]->info = info;
 		phils[i]->name = i + 1;
 		phils[i]->last_eat = 0;
@@ -90,8 +88,8 @@ pthread_t	*start_program(t_info *info)
 	i = -1;
 	info->start = 0;
 	while (++i < info->num_phil)
-		pthread_create(&threads[i], NULL, start_phil, (void *)phils[i]);
+		pthread_create(&phils[i]->thread, NULL, start_phil, (void *)phils[i]);
 	info->start = 1;
 	get_time();
-	return (threads);
+	return (phils);
 }
