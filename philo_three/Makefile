@@ -6,7 +6,7 @@
 #    By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/08 16:41:33 by fredrika          #+#    #+#              #
-#    Updated: 2020/03/25 15:09:41 by fredrikalindh    ###   ########.fr        #
+#    Updated: 2020/10/27 09:49:29 by fredrikalindh    ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,7 @@ NAME					=	philo_three
 
 CC						=	clang
 
-FLAGS					=	-Wall -Wextra -Werror \
-							-g3 -fsanitize=address \
-							# -lpthread \
+FLAGS					=	-Wall -Wextra -Werror 
 
 
 # *** PROJECT HEADER ********************************************************* #

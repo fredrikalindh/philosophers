@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/27 09:00:49 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 09:49:46 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		main(int ac, char **av)
 	while (!(someones_dead = 0))
 	{
 		if (waitpid(-1, &someones_dead, 0) < 0 || ((WIFEXITED(someones_dead)
-				|| WIFSIGNALED(someones_dead)) && someones_dead != 0))
+				|| WIFSIGNALED(someones_dead)) && !someones_dead))
 		{
 			i = -1;
 			while (++i < info.num_phil)
