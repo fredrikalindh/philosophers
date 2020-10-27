@@ -3,19 +3,17 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "clang - Build and debug active file",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/philo_three/philo_three",
-            "args": ["4", "410", "200", "200"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/philo_three",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "C/C++: clang build active file"
-        }
-    ]
+    "configurations": [{
+        "name": "clang - Build and debug active file",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/philo_three/philo_three",
+        "args": ["4", "310", "200", "100"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/philo_three",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "lldb",
+        "preLaunchTask": "C/C++: clang build active file"
+    }]
 }

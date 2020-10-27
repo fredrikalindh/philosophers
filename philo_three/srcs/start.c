@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:43:00 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/22 20:46:08 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*check_if_dead(void *philpointer)
 {
-	t_phil		*phil;
+	t_phil	*phil;
 
 	phil = (t_phil *)philpointer;
 	while (1)
@@ -42,7 +42,7 @@ void	ft_sync(int phils)
 
 void	start_phil(t_phil phil)
 {
-	pthread_t	surveiller;
+	pthread_t surveiller;
 
 	ft_sync(phil.info.num_phil);
 	phil.last_eat = get_time(1);
@@ -63,9 +63,9 @@ void	start_phil(t_phil phil)
 
 pid_t	*start_program(t_info info)
 {
-	t_phil		phil;
-	int			i;
-	pid_t		*pids;
+	t_phil	phil;
+	int		i;
+	pid_t	*pids;
 
 	i = -1;
 	pids = (pid_t *)mmalloc(sizeof(pid_t) * info.num_phil);

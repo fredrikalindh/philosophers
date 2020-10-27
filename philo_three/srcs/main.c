@@ -6,19 +6,18 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:19:39 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/21 16:26:59 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/10/27 09:00:49 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
-#include <stdio.h>
 
 int		get_info(t_info *info, int ac, char **av)
 {
 	if ((info->num_phil = ft_atoi(av[1])) < 2 ||
-		(info->time_to_die = ft_atoi(av[2])) < 0 ||
-		(info->time_to_eat = ft_atoi(av[3])) < 0 ||
-		(info->time_to_sleep = ft_atoi(av[4])) < 0)
+	(info->time_to_die = ft_atoi(av[2])) < 0 ||
+	(info->time_to_eat = ft_atoi(av[3])) < 0 ||
+	(info->time_to_sleep = ft_atoi(av[4])) < 0)
 		return (1);
 	if (ac == 6 && (info->max_eat = ft_atoi(av[5])) <= 0)
 		return (1);
@@ -64,15 +63,17 @@ int		main(int ac, char **av)
 		return (errormess("error: arguments"));
 	if (!(pids = start_program(info)))
 		return (errormess("error: fatal"));
-	someones_dead = 0;
-	i = -1;
-	while (!someones_dead && ++i < info.num_phil)
+	while (!(someones_dead = 0))
 	{
-		wait(&someones_dead);
-		someones_dead = WEXITSTATUS(signal);
+		if (waitpid(-1, &someones_dead, 0) < 0 || ((WIFEXITED(someones_dead)
+				|| WIFSIGNALED(someones_dead)) && someones_dead != 0))
+		{
+			i = -1;
+			while (++i < info.num_phil)
+				kill(pids[i], SIGINT);
+			break ;
+		}
 	}
-	while (--i >= 0)
-		kill(pids[i], SIGKILL);
 	destroy_sem();
 	free_all_malloc();
 	return (0);
