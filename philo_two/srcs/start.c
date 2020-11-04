@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/27 12:10:48 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/11/04 09:57:41 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void		*surveil(void *philpointer)
 		{
 			message(phil, DEAD);
 			phil->info->someone_is_dead = 1;
+			sem_post(phil->eating);
 			break ;
 		}
 		sem_post(phil->eating);
@@ -58,6 +59,7 @@ void		*start_phil(void *philpointer)
 		real_sleep(phil->info->time_to_sleep);
 		message(phil, THINK);
 	}
+	pthread_join(surveiller, NULL);
 	sem_close(phil->eating);
 	sem_unlink(phil->sem_name);
 	return (NULL);

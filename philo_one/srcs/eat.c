@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/22 15:35:48 by fredrika          #+#    #+#             */
-/*   Updated: 2020/03/27 14:07:59 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/11/04 10:06:34 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	eat(t_phil *phil)
 {
-	if (phil->name % 2)
+	if ((phil->name % 2) == 0)
 		pthread_mutex_lock(phil->f1);
 	pthread_mutex_lock(phil->f2);
 	message(phil, FORK);
-	if (!phil->name % 2)
+	if ((phil->name % 2) == 1)
 		pthread_mutex_lock(phil->f1);
 	if (!phil->info->someone_is_dead)
 	{

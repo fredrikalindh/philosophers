@@ -6,7 +6,7 @@
 /*   By: fredrika <fredrika@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:26:53 by fredrika          #+#    #+#             */
-/*   Updated: 2020/10/27 11:49:56 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/11/04 10:53:47 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ void	*check_if_dead(void *philpointer)
 	while (1)
 	{
 		sem_wait(phil->eating);
-		if (phil->times_eaten != phil->info.max_eat &&
-			get_time(0) - phil->last_eat > (u_int64_t)phil->info.time_to_die)
+		if (get_time(0) - phil->last_eat > (u_int64_t)phil->info.time_to_die)
 		{
-			message(phil->name, DEAD);
-			sem_wait(g_dead);
-			exit(1);
+			if (phil->times_eaten != phil->info.max_eat)
+			{
+				message(phil->name, DEAD);
+				sem_wait(g_dead);
+				sem_post(phil->eating);
+				exit(1);
+			}
 		}
 		sem_post(phil->eating);
 		usleep(100);

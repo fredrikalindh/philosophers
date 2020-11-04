@@ -6,11 +6,11 @@
 /*   By: frlindh <frlindh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 18:21:39 by frlindh           #+#    #+#             */
-/*   Updated: 2020/03/24 16:48:18 by fredrikalindh    ###   ########.fr       */
+/*   Updated: 2020/11/04 11:16:02 by fredrikalindh    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <limits.h>
 
 int	ft_atoi(const char *str)
 {
@@ -24,16 +24,16 @@ int	ft_atoi(const char *str)
 	while (str[i] == ' ' || str[i] == '\f' || str[i] == '\t' ||
 		str[i] == '\v' || str[i] == '\r' || str[i] == '\n')
 		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			neg = -neg;
+	if (str[i] == '-')
+		return (-1);
+	if (str[i] == '+')
 		i++;
-	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
+		if ((INT_MAX - (str[i] - '0')) / 10 < c)
+			return (-1);
 		c = c * 10 + str[i] - '0';
 		i++;
 	}
-	return (!i) ? (-1) : (c * neg);
+	return (!i || str[i]) ? (-1) : (c * neg);
 }
